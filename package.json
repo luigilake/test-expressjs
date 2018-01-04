@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/luigilake/test-expressjs/issues"
   },
-  "homepage": "https://github.com/luigilake/test-expressjs#readme"
+  "homepage": "https://github.com/luigilake/test-expressjs#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
