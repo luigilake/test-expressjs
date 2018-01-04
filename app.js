@@ -30,8 +30,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public'))); // css files, react, angular, or static resources go into public folder
 
 app.get('/', (request, response) => {
-  response.send('Hello World'); // renders text
+  // response.send('Hello World'); // renders text
   // response.json(wizards); // renders json
+  response.render('index', {
+    title: 'Wizards'
+  }); // render ejs file
 });
 
 app.listen(3000, () => {
