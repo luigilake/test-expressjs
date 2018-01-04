@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-// var app = express();
+var app = express();
 // var logger = (request, response, next) => {
 //   console.log('Logging...');
 //   next();
