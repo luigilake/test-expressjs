@@ -10,10 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/luigilake/test-expressjs.git"
   },
-  "author": "",
+  "author": "Luigi Lake",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/luigilake/test-expressjs/issues"
   },
-  "homepage": "https://github.com/luigilake/test-expressjs#readme"
+  "homepage": "https://github.com/luigilake/test-expressjs#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
 }
