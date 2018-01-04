@@ -2,6 +2,17 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+var wizards = [
+  {
+    name: 'Gandalf The White',
+    age: 290
+  },
+  {
+    name: 'Saruman',
+    age: 320
+  }
+]
+
 var app = express();
 
 // var logger = (request, response, next) => {
@@ -17,17 +28,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 // set static path
 app.use(express.static(path.join(__dirname, 'public'))); // css files, react, angular, or static resources go into public folder
-
-var wizards = [
-  {
-    name: 'Gandalf The White',
-    age: 290
-  },
-  {
-    name: 'Saruman',
-    age: 320
-  }
-]
 
 app.get('/', (request, response) => {
   // response.send('Hello World'); // renders text
