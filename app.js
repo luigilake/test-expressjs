@@ -18,8 +18,20 @@ app.use(bodyParser.urlencoded({extended: false}))
 // set static path
 app.use(express.static(path.join(__dirname, 'public'))); // css files, react, angular, or static resources go into public folder
 
+var wizards = [
+  {
+    name: 'Gandalf The White',
+    age: 290
+  },
+  {
+    name: 'Saruman',
+    age: 320
+  }
+]
+
 app.get('/', (request, response) => {
-  response.send('Hello World');
+  // response.send('Hello World'); // renders text
+  response.json(wizards); // renders json
 });
 
 app.listen(3000, () => {
