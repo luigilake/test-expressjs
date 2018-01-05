@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import expressValidator from 'express-validator';
 
 var people = [
   {
@@ -43,6 +44,30 @@ app.use(bodyParser.urlencoded({extended: false}))
 // set static path
 app.use(express.static(path.join(__dirname, 'public'))); // css files, react, angular, or static resources go into public folder
 
+// Global Vars
+app.use((request, response, next) => {
+  response.locals.errors = null
+  next();
+})
+
+// Express Validator Middleware
+app.use(expressValidator({
+  errorFormatter: (param, msg, value) => {
+    let namespace = param.split('.')
+    , root = namespace.shift()
+    , formParam = root;
+
+    while(namespace.length){
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    }
+  }
+}))
+
 app.get('/', (request, response) => {
   // response.send('Hello World'); // renders text
   // response.json(wizards); // renders json
@@ -52,6 +77,32 @@ app.get('/', (request, response) => {
   }); // render ejs file
 });
 
+app.post('/users/add', (request, response) => {
+
+  request.checkBody('name', 'Name is required').notEmpty();
+  request.checkBody('race', 'Race is required').notEmpty();
+  request.checkBody('age', 'Age is required').notEmpty();
+
+  let errors = request.validationErrors();
+  if(errors){
+    console.log('**** ERROR ****');
+    response.render('index', {
+      title: 'Wizards',
+      people: people,
+      errors: errors
+    });
+  } else {
+    let newPerson = {
+      name: request.body.name,
+      race: request.body.race,
+      age: request.body.age
+    }
+    console.log('**** SUCCESS ****');
+    console.log(newPerson);
+  }
+
+});
+
 app.listen(3000, () => {
-  console.log('Server started on Port 3000...')
+  console.log('**** Server started on Port 3000 ****')
 });
