@@ -53,7 +53,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users/add', (request, response) => {
-  console.log('**** form submitted ****')
+  console.log(request.body.name);
 });
 
 app.listen(3000, () => {
