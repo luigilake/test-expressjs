@@ -53,7 +53,13 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users/add', (request, response) => {
-  console.log(request.body.name);
+  let newPerson = {
+    name: request.body.name,
+    race: request.body.race,
+    age: request.body.age
+  }
+  console.log(newPerson);
+
 });
 
 app.listen(3000, () => {
