@@ -52,6 +52,10 @@ app.get('/', (request, response) => {
   }); // render ejs file
 });
 
+app.post('/users/add', (request, response) => {
+  console.log('**** form submitted ****')
+});
+
 app.listen(3000, () => {
   console.log('Server started on Port 3000...')
 });
