@@ -44,6 +44,12 @@ app.use(bodyParser.urlencoded({extended: false}))
 // set static path
 app.use(express.static(path.join(__dirname, 'public'))); // css files, react, angular, or static resources go into public folder
 
+// Global Vars
+app.use((request, response, next) => {
+  response.locals.errors = null
+  next();
+})
+
 // Express Validator Middleware
 app.use(expressValidator({
   errorFormatter: (param, msg, value) => {
@@ -80,6 +86,11 @@ app.post('/users/add', (request, response) => {
   let errors = request.validationErrors();
   if(errors){
     console.log('**** ERROR ****');
+    response.render('index', {
+      title: 'Wizards',
+      people: people,
+      errors: errors
+    });
   } else {
     let newPerson = {
       name: request.body.name,
@@ -93,5 +104,5 @@ app.post('/users/add', (request, response) => {
 });
 
 app.listen(3000, () => {
-  console.log('Server started on Port 3000...')
+  console.log('**** Server started on Port 3000 ****')
 });
