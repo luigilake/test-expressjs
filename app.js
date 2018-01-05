@@ -2,12 +2,26 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-// var wizards = [
-//   {
-//     name: 'Gandalf The White',
-//     age: 290
-//   }
-// ]
+var people = [
+  {
+    id: 1,
+    name: 'Gandalf',
+    race: 'Wizard',
+    age: 290
+  },
+  {
+    id: 2,
+    name: 'Legolas',
+    race: 'Elf',
+    age: 732
+  },
+  {
+    id: 3,
+    name: 'Gimli',
+    race: 'Dwarf',
+    age: 183
+  }
+]
 
 var app = express();
 
@@ -33,7 +47,8 @@ app.get('/', (request, response) => {
   // response.send('Hello World'); // renders text
   // response.json(wizards); // renders json
   response.render('index', {
-    title: 'Wizards'
+    title: 'Wizards',
+    people: people
   }); // render ejs file
 });
 
