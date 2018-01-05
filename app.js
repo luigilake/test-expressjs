@@ -2,14 +2,24 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-var wizards = [
+var people = [
   {
-    name: 'Gandalf The White',
+    id: 1,
+    name: 'Gandalf',
+    race: 'Wizard',
     age: 290
   },
   {
-    name: 'Saruman',
-    age: 320
+    id: 2,
+    name: 'Legolas',
+    race: 'Elf',
+    age: 732
+  },
+  {
+    id: 3,
+    name: 'Gimli',
+    race: 'Dwarf',
+    age: 183
   }
 ]
 
@@ -22,6 +32,10 @@ var app = express();
 //
 // app.use(logger);
 
+// view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'))
+
 // body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
@@ -31,7 +45,11 @@ app.use(express.static(path.join(__dirname, 'public'))); // css files, react, an
 
 app.get('/', (request, response) => {
   // response.send('Hello World'); // renders text
-  response.json(wizards); // renders json
+  // response.json(wizards); // renders json
+  response.render('index', {
+    title: 'Wizards',
+    people: people
+  }); // render ejs file
 });
 
 app.listen(3000, () => {

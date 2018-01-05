@@ -1,0 +1,24 @@
+<% include partials/header %>
+  <h1>Add New Person</h1>
+  <form class="" action="index.html" method="post">
+    <label for="">Name</label>
+    <input type="text" name="name" value="">
+    <br>
+    <label for="">Race</label>
+    <input type="text" name="race" value="">
+    <br>
+    <label for="">Age</label>
+    <input type="text" name="age" value="">
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+  <h1><%= title %></h1>
+  <ul>
+    <% people.forEach(person => {%>
+      <li><h3><%= person.name%></h3>
+          <p>Race: <%= person.race%></p>
+          <p>Age: <%= person.age%></p></li>
+    <% }) %>
+  </ul>
+
+<% include partials/footer %>
