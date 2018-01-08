@@ -2,27 +2,30 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import expressValidator from 'express-validator';
+import mongojs from 'mongojs';
 
-var people = [
-  {
-    id: 1,
-    name: 'Gandalf',
-    race: 'Wizard',
-    age: 290
-  },
-  {
-    id: 2,
-    name: 'Legolas',
-    race: 'Elf',
-    age: 732
-  },
-  {
-    id: 3,
-    name: 'Gimli',
-    race: 'Dwarf',
-    age: 183
-  }
-]
+var db = mongojs('testexpressapp', ['people']);
+
+// var people = [
+//   {
+//     id: 1,
+//     name: 'Gandalf',
+//     race: 'Wizard',
+//     age: 290
+//   },
+//   {
+//     id: 2,
+//     name: 'Legolas',
+//     race: 'Elf',
+//     age: 732
+//   },
+//   {
+//     id: 3,
+//     name: 'Gimli',
+//     race: 'Dwarf',
+//     age: 183
+//   }
+// ]
 
 var app = express();
 
@@ -69,12 +72,16 @@ app.use(expressValidator({
 }))
 
 app.get('/', (request, response) => {
+  db.people.find((err, docs) => { // this accesses the database
+    response.render('index', {
+      title: 'Wizards',
+      people: docs
+    }); // render ejs file
+  })
+
+
   // response.send('Hello World'); // renders text
   // response.json(wizards); // renders json
-  response.render('index', {
-    title: 'Wizards',
-    people: people
-  }); // render ejs file
 });
 
 app.post('/users/add', (request, response) => {
@@ -86,19 +93,27 @@ app.post('/users/add', (request, response) => {
   let errors = request.validationErrors();
   if(errors){
     console.log('**** ERROR ****');
-    response.render('index', {
-      title: 'Wizards',
-      people: people,
-      errors: errors
-    });
+    console.log(errors)
+    db.people.find((err, docs) => {
+      response.render('index', {
+        title: 'Wizards',
+        people: docs,
+        errors: errors
+      }); // render ejs file
+    })
   } else {
+    console.log('**** SUCCESS ****');
     let newPerson = {
       name: request.body.name,
       race: request.body.race,
       age: request.body.age
     }
-    console.log('**** SUCCESS ****');
-    console.log(newPerson);
+    db.people.insert(newPerson, (err, result) => {
+      if(err){
+        console.log(err);
+      }
+      response.redirect('/');
+    })
   }
 
 });
