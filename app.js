@@ -102,13 +102,18 @@ app.post('/users/add', (request, response) => {
       }); // render ejs file
     })
   } else {
+    console.log('**** SUCCESS ****');
     let newPerson = {
       name: request.body.name,
       race: request.body.race,
       age: request.body.age
     }
-    console.log('**** SUCCESS ****');
-    console.log(newPerson);
+    db.people.insert(newPerson, (err, result) => {
+      if(err){
+        console.log(err);
+      }
+      response.redirect('/');
+    })
   }
 
 });
